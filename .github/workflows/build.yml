@@ -1,0 +1,61 @@
+name: Byg KD Mail
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+  schedule:
+    # Hver mandag: byg igen, så nye Thunderbird-sikkerhedsopdateringer kommer med
+    - cron: "17 5 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Værktøjer
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q nsis p7zip-full hfsprogs rpm zip \
+            cmake libssl-dev zlib1g-dev libbz2-dev liblzma-dev python3-pil
+          
+      - name: Cache byggeværktøjer
+        id: tools
+        uses: actions/cache@v4
+        with:
+          path: ~/kd-tools
+          key: kd-tools-v1
+
+      - name: Byg dmg/hfsplus og rcodesign
+        if: steps.tools.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 https://github.com/mozilla/libdmg-hfsplus /tmp/libdmg
+          cmake -S /tmp/libdmg -B /tmp/libdmg/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build /tmp/libdmg/build -j4
+          mkdir -p ~/kd-tools/bin
+          cp /tmp/libdmg/build/dmg/dmg /tmp/libdmg/build/hfs/hfsplus ~/kd-tools/bin/
+          cargo install apple-codesign --locked --root ~/kd-tools
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Byg installationsfiler
+        run: |
+          export PATH="$HOME/kd-tools/bin:$PATH"
+          ./build.sh linux win mac
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KD-Mail
+          path: dist/*
+
+      - name: Udgiv (ved tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
