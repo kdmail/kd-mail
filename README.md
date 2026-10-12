@@ -13,7 +13,7 @@ om til KD Mail:
 |---|---|
 | Navnet "KD Mail" i hele programmet | `scripts/rebrand.py` (brand.ftl/.properties/.dtd i omni.ja) |
 | App-ikon og logoer | `branding/` → omni.ja, Windows-exe, macOS .icns, Linux-ikoner |
-| Egen profilmappe, så KD Mail ikke deler data med en evt. Thunderbird | `application.ini` (Profile=KDMail) |
+| Egen profil, adskilt fra en evt. Thunderbird | automatisk (Thunderbird giver hver installation sin egen profil) |
 | KD-farver (blå #00238C, orange #F58220) | `extension/background.js` |
 | Kontoopsætning og signatur | `extension/` (indbygget, kan ikke fjernes) |
 | Låste indstillinger, ingen Mozilla-opdateringer | `distribution/policies.json` |
