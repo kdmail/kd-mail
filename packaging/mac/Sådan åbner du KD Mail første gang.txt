@@ -1,0 +1,13 @@
+SÅDAN INSTALLERER DU KD MAIL PÅ MAC
+
+1. Træk "KD Mail" over i mappen "Programmer" (Applications) i dette vindue.
+2. Åbn "Programmer", og dobbeltklik på "KD Mail".
+
+Første gang siger macOS, at programmet ikke kan bekræftes. Det er normalt –
+KD Mail er endnu ikke registreret hos Apple.
+
+3. Klik "OK" (eller "Færdig").
+4. Åbn Systemindstillinger → Anonymitet og sikkerhed.
+5. Rul ned, og klik "Åbn alligevel" ud for KD Mail. Bekræft med din adgangskode.
+
+Derefter åbner KD Mail normalt hver gang.

@@ -1,0 +1,49 @@
+[
+  {
+    "namespace": "kdAccount",
+    "functions": [
+      {
+        "name": "findExisting",
+        "type": "function",
+        "async": true,
+        "description": "Returnerer {accountId, identityId, email} for en eksisterende @kd.dk-konto, eller null.",
+        "parameters": []
+      },
+      {
+        "name": "create",
+        "type": "function",
+        "async": true,
+        "description": "Opretter IMAP/SMTP-konto hos Simply.com for <localPart>@kd.dk med HTML-signatur.",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "localPart": { "type": "string" },
+              "password": { "type": "string" },
+              "fullName": { "type": "string" },
+              "signatureHtml": { "type": "string" }
+            }
+          }
+        ]
+      },
+      {
+        "name": "updateIdentity",
+        "type": "function",
+        "async": true,
+        "description": "Opdaterer navn og signatur på en eksisterende identitet.",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "identityId": { "type": "string" },
+              "fullName": { "type": "string" },
+              "signatureHtml": { "type": "string" }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

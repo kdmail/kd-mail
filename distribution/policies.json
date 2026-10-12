@@ -1,0 +1,19 @@
+{
+  "policies": {
+    "DisableAppUpdate": true,
+    "DisableTelemetry": true,
+    "Extensions": {
+      "Locked": ["kd-mail@kd.dk"]
+    },
+    "Preferences": {
+      "extensions.installDistroAddons": { "Value": true, "Status": "locked" },
+      "mail.provider.suppress_dialog_on_startup": { "Value": true, "Status": "default" },
+      "mail.accounthub.enabled": { "Value": false, "Status": "default" },
+      "mail.shell.checkDefaultClient": { "Value": false, "Status": "default" },
+      "mailnews.start_page.enabled": { "Value": false, "Status": "default" },
+      "mail.identity.default.compose_html": { "Value": true, "Status": "default" },
+      "mail.identity.default.suppress_sig_separator": { "Value": true, "Status": "default" },
+      "spellchecker.dictionary": { "Value": "da", "Status": "default" }
+    }
+  }
+}

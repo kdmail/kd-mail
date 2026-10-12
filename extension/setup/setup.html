@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <title>KD Mail – opsætning</title>
+  <link rel="stylesheet" href="setup.css">
+</head>
+<body>
+  <header>
+    <img src="../images/icon-64.png" alt="" width="44" height="44">
+    <div>
+      <h1>Velkommen til KD Mail</h1>
+      <p id="intro">Udfyld felterne, så opsætter vi din @kd.dk-mail og din signatur automatisk.</p>
+    </div>
+  </header>
+
+  <main>
+    <form id="form" autocomplete="off" novalidate>
+      <fieldset id="login">
+        <legend>Din KD-mail</legend>
+        <label for="localPart">Mailadresse</label>
+        <div class="email">
+          <input id="localPart" required placeholder="fx 06naarestrup" spellcheck="false">
+          <span>@kd.dk</span>
+        </div>
+        <label for="password">Adgangskode</label>
+        <input id="password" type="password" required>
+      </fieldset>
+
+      <fieldset>
+        <legend>Din signatur</legend>
+        <label for="fullName">Fulde navn</label>
+        <input id="fullName" required placeholder="fx Niclas Aarestrup">
+
+        <label for="roles">Funktion i partiet <small>(én linje pr. linje i signaturen)</small></label>
+        <textarea id="roles" rows="4" placeholder="fx Landssekretær.&#10;Ordfører for ..."></textarea>
+
+        <label for="mobile">Mobilnummer <small>(valgfrit)</small></label>
+        <input id="mobile" type="tel" placeholder="+45 12 34 56 78">
+
+        <label for="greeting">Hilsen</label>
+        <input id="greeting" value="De bedste hilsner,">
+      </fieldset>
+
+      <p id="error" role="alert" hidden></p>
+      <button id="submit" type="submit">Opsæt KD Mail</button>
+    </form>
+
+    <section class="preview">
+      <h2>Sådan ser din signatur ud</h2>
+      <div id="preview"></div>
+    </section>
+  </main>
+
+  <div id="done" hidden>
+    <h1>Så er du klar ✓</h1>
+    <p id="doneText"></p>
+    <button id="close" type="button">Luk</button>
+  </div>
+
+  <script src="../signature.js"></script>
+  <script src="setup.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "manifest_version": 2,
+  "name": "KD Mail",
+  "description": "Opsætter KD-mail (@kd.dk) og KD-signatur automatisk.",
+  "version": "1.0.0",
+  "author": "Kristendemokraterne",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "kd-mail@kd.dk",
+      "strict_min_version": "128.0"
+    }
+  },
+  "icons": {
+    "32": "images/icon-32.png",
+    "64": "images/icon-64.png",
+    "128": "images/icon-128.png"
+  },
+  "permissions": [
+    "accountsRead",
+    "accountsIdentities",
+    "storage",
+    "theme"
+  ],
+  "background": {
+    "scripts": [
+      "signature.js",
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "setup/setup.html?mode=edit",
+    "open_in_tab": true
+  },
+  "browser_action": {
+    "default_title": "KD-signatur",
+    "default_icon": "images/icon-32.png"
+  },
+  "experiment_apis": {
+    "kdAccount": {
+      "schema": "api/kdAccount/schema.json",
+      "parent": {
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "kdAccount"
+          ]
+        ],
+        "script": "api/kdAccount/implementation.js"
+      }
+    }
+  }
+}
