@@ -19,10 +19,18 @@
             "name": "details",
             "type": "object",
             "properties": {
-              "localPart": { "type": "string" },
-              "password": { "type": "string" },
-              "fullName": { "type": "string" },
-              "signatureHtml": { "type": "string" }
+              "localPart": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "signatureHtml": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -37,12 +45,25 @@
             "name": "details",
             "type": "object",
             "properties": {
-              "identityId": { "type": "string" },
-              "fullName": { "type": "string" },
-              "signatureHtml": { "type": "string" }
+              "identityId": {
+                "type": "string"
+              },
+              "fullName": {
+                "type": "string"
+              },
+              "signatureHtml": {
+                "type": "string"
+              }
             }
           }
         ]
+      },
+      {
+        "name": "checkForUpdate",
+        "type": "function",
+        "async": true,
+        "description": "Søger efter en ny version af KD-tilføjelsen og installerer den.",
+        "parameters": []
       }
     ]
   }

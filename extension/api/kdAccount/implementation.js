@@ -12,6 +12,9 @@ var { ExtensionUtils } = ChromeUtils.importESModule(
 var { MailServices } = ChromeUtils.importESModule(
   "resource:///modules/MailServices.sys.mjs"
 );
+var { AddonManager } = ChromeUtils.importESModule(
+  "resource://gre/modules/AddonManager.sys.mjs"
+);
 
 const KD = {
   domain: "kd.dk",
@@ -144,6 +147,29 @@ this.kdAccount = class extends ExtensionCommon.ExtensionAPI {
           } catch (e) {}
 
           return { accountId: account.key, identityId: identity.key, email };
+        },
+
+        async checkForUpdate() {
+          // Tjek straks for en ny KD-tilføjelse (ellers gør Thunderbird det kun én gang i døgnet)
+          const addon = await AddonManager.getAddonByID(context.extension.id);
+          if (!addon) return false;
+          return new Promise((resolve) => {
+            addon.findUpdates(
+              {
+                onUpdateAvailable(a, install) {
+                  install.install();
+                  resolve(true);
+                },
+                onNoUpdateAvailable() {
+                  resolve(false);
+                },
+                onUpdateFinished() {
+                  resolve(false);
+                },
+              },
+              AddonManager.UPDATE_WHEN_USER_REQUESTED
+            );
+          });
         },
 
         async updateIdentity({ identityId, fullName, signatureHtml }) {

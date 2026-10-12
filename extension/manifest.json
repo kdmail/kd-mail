@@ -7,7 +7,8 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "kd-mail@kd.dk",
-      "strict_min_version": "128.0"
+      "strict_min_version": "128.0",
+      "update_url": "https://github.com/kdmail/kd-mail/releases/download/addon/updates.json"
     }
   },
   "icons": {

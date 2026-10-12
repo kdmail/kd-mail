@@ -31,6 +31,16 @@ browser.runtime.onInstalled.addListener(checkFirstRun);
 // Sikkerhedsnet: tjek også, når baggrundsscriptet indlæses
 setTimeout(checkFirstRun, 1500);
 
+// Automatisk opdatering af KD-tilføjelsen fra GitHub (kdmail/kd-mail).
+// Venter til kontoen er sat op, så en opdatering ikke lukker velkomstskærmen.
+setTimeout(async () => {
+  try {
+    if (await browser.kdAccount.findExisting()) await browser.kdAccount.checkForUpdate();
+  } catch (e) {
+    console.error("KD Mail: opdateringstjek fejlede", e);
+  }
+}, 30000);
+
 // Værktøjslinjeknappen "KD-signatur" åbner redigering af signaturen
 browser.browserAction.onClicked.addListener(async () => {
   let existing = null;
