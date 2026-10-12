@@ -19,9 +19,9 @@ echo "   KD Mail $KDV"
 for p in "${PLATS[@]}"; do
   echo "== $p"
   case "$p" in
-    linux) scripts/package-linux.sh "$KDV" ;;
-    win)   scripts/package-windows.sh "$KDV" "$TBV" ;;
-    mac)   scripts/package-mac.sh "$KDV" ;;
+    linux) bash scripts/package-linux.sh "$KDV" ;;
+    win)   bash scripts/package-windows.sh "$KDV" "$TBV" ;;
+    mac)   bash scripts/package-mac.sh "$KDV" ;;
   esac
 done
 echo "== Færdig – se dist/"; ls -lh dist
