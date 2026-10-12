@@ -31,8 +31,31 @@ BRAND_IMAGE = re.compile(
 
 
 # ---------------------------------------------------------------- tekster
+def patch_dtd(text):
+    """DTD-filer behandles samlet, fordi værdier kan strække sig over flere linjer."""
+    def ent(m):
+        key = m.group(1)
+        if re.match(r"brand\w*Name$", key):
+            val = NAME
+        elif key.startswith("trademarkInfo"):
+            val = TRADEMARK if key.endswith("part1") else ""
+        else:
+            val = m.group(2).replace("Mozilla Thunderbird", NAME)
+            val = re.sub(r"\bThunderbird\b", NAME, val)
+        return f'<!ENTITY {key} "{val}">'
+    out = re.sub(r'<!ENTITY\s+([\w.-]+)\s+"([^"]*)"\s*>', ent, text, flags=re.S)
+    # Kontrol: der må kun være kommentarer, entiteter og blanktegn tilbage
+    rest = re.sub(r"<!--.*?-->", "", out, flags=re.S)
+    rest = re.sub(r'<!ENTITY\s+[\w.-]+\s+(?:"[^"]*"|\'[^\']*\')\s*>', "", rest, flags=re.S)
+    if rest.strip():
+        raise SystemExit(f"brand.dtd kunne ikke omdøbes sikkert – uventet indhold: {rest.strip()[:200]!r}")
+    return out
+
+
 def patch_brand_text(path, text):
-    out, skip_cont = [], False
+    if path.endswith(".dtd"):
+        return patch_dtd(text)
+    out, skip_cont, skip_props = [], False, False
     for line in text.splitlines(keepends=True):
         nl = "\n" if line.endswith("\n") else ""
         if skip_cont:
@@ -55,6 +78,10 @@ def patch_brand_text(path, text):
                 continue
             if re.match(r"^trademarkInfo", line):
                 out.append(f"trademarkInfo={TRADEMARK}{nl}")
+                skip_props = line.rstrip("\r\n").endswith("\\")
+                continue
+            if skip_props:
+                skip_props = line.rstrip("\r\n").endswith("\\")
                 continue
         elif path.endswith(".dtd"):
             m = re.match(r'^(<!ENTITY\s+brand\w*Name\s+)"[^"]*"', line)
