@@ -22,7 +22,7 @@ om til KD Mail:
 Resultat i `dist/`:
 
 - **Windows:** `KD-Mail-Setup-<version>.exe`. Installeres pr. bruger og kræver ikke administrator.
-- **macOS:** `KD-Mail-<version>-macOS.dmg`. Universel (Intel og Apple Silicon), ad hoc-signeret.
+- **macOS:** `KD-Mail-<version>-macOS.pkg` (anbefalet) og `KD-Mail-<version>-macOS.dmg`. Universel (Intel og Apple Silicon), ad hoc-signeret på en rigtig Mac med Apples `codesign`.
 - **Linux:** `kd-mail_<version>_amd64.deb` (Ubuntu/Debian/Mint) og `kd-mail-<version>.x86_64.rpm` (Fedora/openSUSE).
 
 ## Byg (anbefalet: GitHub)
@@ -49,8 +49,7 @@ rpm, node, python3-pil, `dmg`/`hfsplus` (mozilla/libdmg-hfsplus) og `rcodesign`.
 Indtil filerne signeres, advarer styresystemet første gang:
 
 - **Windows:** "Windows beskyttede din pc" → **Flere oplysninger** → **Kør alligevel**.
-- **macOS:** Åbn .dmg-filen → træk KD Mail til Programmer → åbn KD Mail → OK →
-  **Systemindstillinger → Anonymitet og sikkerhed → Åbn alligevel**. Vejledningen ligger også i .dmg-filen.
+- **macOS:** Dobbeltklik på .pkg-filen → OK → **Systemindstillinger → Anonymitet og sikkerhed → Åbn alligevel** → følg installationen. Derefter starter KD Mail uden flere advarsler.
 - **Linux:** Dobbeltklik på .deb- eller .rpm-filen → **Installér** i Software-centret.
 
 Advarslerne forsvinder, når filerne signeres. Det kræver et Apple Developer ID

@@ -15,7 +15,7 @@ python3 scripts/fetch.py "$TB_VERSION" "$TB_LOCALE" downloads "${PLATS[@]}"
 TBV="$(cat downloads/VERSION)"; KDV="${TBV}-kd${KD_REVISION}"
 echo "   KD Mail $KDV"
 
-[ -d scripts/node_modules ] || (cd scripts && npm install --silent)
+if [[ " ${PLATS[*]} " == *" win "* ]] && [ ! -d scripts/node_modules ]; then (cd scripts && npm install --silent); fi
 for p in "${PLATS[@]}"; do
   echo "== $p"
   case "$p" in
