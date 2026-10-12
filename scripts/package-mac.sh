@@ -18,13 +18,11 @@ mv "$SRC_APP" "$APP"
 python3 "$REPO/scripts/mac-bundle.py" "$APP" "$REPO" "$KDV"
 python3 "$REPO/scripts/rebrand.py" "$APP/Contents/Resources" "$REPO" "$KDV"
 
-# Ad hoc-signering (uden Apple-certifikat). Uden den melder macOS "beskadiget".
-# Mozillas "hardened runtime" og entitlements fjernes – de kræver Mozillas eget
-# certifikat og ville få macOS til at stoppe programmet ved start.
-"$RCODESIGN" sign --code-signature-flags hard \
-  --entitlements-xml-file "$REPO/packaging/mac/entitlements.plist" "$APP" >"$W/sign.log" 2>&1 \
-  || { tail -20 "$W/sign.log"; exit 1; }
-echo "  ad hoc-signeret"
+# Ad hoc-signering af hver programfil for sig (uden Apple-certifikat).
+# Mozillas Team ID og "hardened runtime" fjernes overalt – blandes de, nægter
+# macOS at starte hjælpeprocesserne (plugin-container, crashhelper).
+python3 "$REPO/scripts/mac-sign.py" "$RCODESIGN" "$APP" \
+  "$REPO/packaging/mac/entitlements.plist" "$W/sign.log"
 
 # Byg .dmg med genvej til Programmer
 ln -s /Applications "$W/stage/Applications"
