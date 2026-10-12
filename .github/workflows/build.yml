@@ -30,6 +30,19 @@ jobs:
       - name: Byg installationsfiler
         run: bash build.sh linux win
 
+      - name: Udgiv KD-tilføjelsen til automatisk opdatering
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: addon
+          name: KD-tilføjelse (automatisk opdatering)
+          body: Bruges af KD Mail til at opdatere sig selv. Skal ikke downloades manuelt.
+          prerelease: true
+          make_latest: false
+          files: |
+            build/addon/kd-mail.xpi
+            build/addon/updates.json
+
       - uses: actions/upload-artifact@v7
         with:
           name: KD-Mail-Windows-Linux
