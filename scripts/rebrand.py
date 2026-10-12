@@ -161,7 +161,10 @@ def rebrand_omni(path, art):
 def patch_application_ini(path, build_id):
     lines = open(path, encoding="utf-8").read().splitlines()
     out, section, seen = [], None, set()
-    want = {"Name": "KDMail", "RemotingName": "kdmail", "Profile": "KDMail", "BuildID": build_id}
+    # Kun BuildID ændres (tvinger Thunderbird til at genindlæse den omdøbte omni.ja).
+    # Name/Profile røres ikke – det får profilstyringen til at fejle. KD Mail får alligevel
+    # sin egen profil, fordi Thunderbird giver hver installationsmappe sin egen standardprofil.
+    want = {"BuildID": build_id}
 
     def flush_missing():
         if section == "App":
@@ -222,7 +225,7 @@ def main():
     print("  omni.ja:", rebrand_omni(omni, art))
 
     patch_application_ini(os.path.join(res, "application.ini"), time.strftime("%Y%m%d%H%M%S", time.gmtime()))
-    print("  application.ini: Name=KDMail, Profile=KDMail")
+    print("  application.ini: ny BuildID")
 
     print("  løse ikoner:", replace_loose_icons(res, art))
 

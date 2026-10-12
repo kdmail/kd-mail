@@ -19,7 +19,7 @@ Terminal=false
 Type=Application
 Categories=Network;Email;
 MimeType=x-scheme-handler/mailto;message/rfc822;
-StartupWMClass=kdmail
+StartupWMClass=thunderbird
 DESK
 cp "$REPO/branding/kd-mail-256.png" "$W/kd-mail/kd-mail.png"
 
